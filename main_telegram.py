@@ -1,5 +1,5 @@
-from messengers import Telegram_Bot
+from messengers import TelegramBot
 
 
-bot = Telegram_Bot()
+bot = TelegramBot()
 bot.iniciar()
