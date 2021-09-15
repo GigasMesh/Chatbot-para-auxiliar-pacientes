@@ -3,6 +3,6 @@ O projeto será desenvolvido em .py.
 
 ```
 É possível interagir com o bot em: 
-[Med bot](https://t.me/Med_Health_Bot)
+https://t.me/Med_Health_Bot
 
 ```
