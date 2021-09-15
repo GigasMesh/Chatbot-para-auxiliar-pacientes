@@ -1,1 +1,1 @@
-from messengers.telegram import Telegram_Bot
+from messengers.telegram import TelegramBot
