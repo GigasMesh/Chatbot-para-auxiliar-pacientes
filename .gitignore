@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.idea
-token_telegram.txt
+messengers/token_telegram.txt
 funcionalidades/funcionalidade_filmes/api_key.txt
 
 # C extensions
