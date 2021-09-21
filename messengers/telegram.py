@@ -4,7 +4,7 @@ import json
 
 class TelegramBot:
     def __init__(self):
-        self.token = open('messengers/token_telegram.txt').read()
+        self.token = open('messengers/tokenTelegram.txt').read()
         self.url_base = f'https://api.telegram.org/bot{self.token}/'
     
     # Start Bot
