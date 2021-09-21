@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
+from dataset_services import PandasDataset
 
 
-def transform_dataset(dataset):
+def transformDataset(dataset):
     symptons = ['disease']
     for row in range(1, len(dataset)):
         for column in range(1, len(dataset.columns)):
@@ -10,8 +11,8 @@ def transform_dataset(dataset):
                 symptons.append(dataset[dataset.columns[column]][row])
 
     symptons.pop(4)
-    zero_data = np.zeros(shape=(len(dataset) - 1, len(symptons)), dtype='int32')
-    dataframe = pd.DataFrame(zero_data, columns=symptons)
+    zeroData = np.zeros(shape=(len(dataset) - 1, len(symptons)), dtype='int32')
+    dataframe = pd.DataFrame(zeroData, columns=symptons)
 
     for row in range(1, len(dataset)):
         for column in range(0, len(dataset.columns)):
@@ -21,4 +22,4 @@ def transform_dataset(dataset):
                 else:
                     dataframe.loc[row - 1, dataset[dataset.columns[column]][row]] = 1
 
-    dataframe.to_csv('datasets/modified_dataset.csv', index=False)
+    dataframe.to_csv('datasets/modifiedDataset.csv', index=False)
