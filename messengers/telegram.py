@@ -15,11 +15,13 @@ class TelegramBot:
             data = update["result"]
             if data:
                 for item in data:
-                    update_id = item['update_id']
-                    chat_id = item["message"]["from"]["id"]
-                    is_first_message = item["message"]["message_id"] == 1
-                    answer = self.createAnswer(is_first_message, item)
-                    self.reply(answer, chat_id)
+                    print(item)
+                    if 'message' in item:
+                        update_id = item['update_id']
+                        chat_id = item["message"]["from"]["id"]
+                        is_first_message = item["message"]["message_id"] == 1
+                        answer = self.createAnswer(is_first_message, item)
+                        self.reply(answer, chat_id)
 
     # Get messages from chat
     def getMessages(self, update_id):
