@@ -23,3 +23,4 @@ def transformDataset(dataset):
                     dataframe.loc[row - 1, dataset[dataset.columns[column]][row]] = 1
 
     dataframe.to_csv('datasets/modifiedDataset.csv', index=False)
+
