@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 class PandasDataset:
@@ -42,3 +43,27 @@ class PandasDataset:
                     numberOfOnes += 1
             if numberOfOnes <= 2:
                 self.dataset.drop(row, axis=0, inplace=True)
+
+    def getRanking(self):
+        symptons = []
+        numbers = np.zeros(len(self.dataset.columns) - 1)
+        for column in range(1, len(self.dataset.columns)):
+            symptons.append(self.dataset.columns[column])
+            for row in range(len(self.dataset)):
+                if self.dataset[self.dataset.columns[column]][row] == 1:
+                    numbers[column-1] += 1
+        id = np.argsort(numbers)
+        symptons = np.array(symptons)
+        return symptons[id[::-1]]
+
+    def getCorrelatedSymptoms(self, symptom, list):
+        print(list)
+        symptoms = []
+        for row in range(len(self.dataset)):
+            if self.dataset[symptom][row] == 1:
+                for column in self.dataset.columns:
+                    if column != symptom:
+                        if self.dataset[column][row] == 1 and column not in symptoms and column not in list:
+                            symptoms.append(column)
+        return symptoms
+
