@@ -1,0 +1,5 @@
+scikit-learn==1.0
+pyTelegramBotAPI==4.0.1
+pandas==1.2.1
+numpy==1.21.0
+pycep-correios==5.0.0
