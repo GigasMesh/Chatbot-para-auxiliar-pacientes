@@ -18,6 +18,7 @@ def message_received(message):
     else:
         result = botObject.returnMenu(userId, message)
         if result:
+            print("Sintomas do usuário %s: " % message.from_user.username, botObject.usersSymptons[userId])
             bot.send_message(chat_id=message.from_user.id, text=result)
         else:
             decisionTree = DecisionTree('dataset_services/datasets/modifiedDataset.csv')
@@ -26,9 +27,8 @@ def message_received(message):
             print("Doença do usuário %s: " % message.from_user.username, disease)
             bot.send_message(chat_id=message.from_user.id, text="Não há mais sintomas para serem mostrados")
             bot.send_message(chat_id=message.from_user.id, text="Parabéns! Sua doença é: %s" % disease)
+            print("Sintomas do usuário %s: " % message.from_user.username, botObject.usersSymptons[userId])
             botObject.resetUserInformations(userId)
-    # print(botObject.usersInformations)
-    print("Sintomas do usuário %s: " % message.from_user.username, botObject.usersSymptons[userId])
 
 
 bot.polling(True)

@@ -15,16 +15,19 @@ class BotMessages:
                             "Qual o CEP do lugar onde você mora?"]
 
     def generateMenu(self, index, rank=None):
-        if not rank:
+        number = 5
+        if rank is None:
             rank = self.rank
-        if index > len(rank) - 5:
+        if index == len(rank) or index > len(rank):
             return None
+        if index > len(rank) - 5:
+            number = len(rank) - index
         print("tamanho do rank: ", len(rank))
-        menu = "Digite o número do primeiro sintoma que você está sentindo:\n"
-        for numero in range(index, index+5):
+        menu = "Digite o número de um sintoma que você está sentindo:\n"
+        for numero in range(index, index+number):
             menu = menu + "%d - %s\n" % (numero - index, rank[numero])
-        menu = menu + "5 - Nenhum dos sintomas acima\n"
-        menu = menu + "6 - Não tenho mais sintomas para listar"
+        menu = menu + "Prox - Nenhum dos sintomas acima\n"
+        menu = menu + "Sair - Não tenho mais sintomas para listar"
         return menu
 
     def returnQuestion(self, userId, message):
@@ -42,10 +45,10 @@ class BotMessages:
 
     def returnMenu(self, userId, message):
         numberOfSymptoms = len(self.usersSymptons[userId]) - 1
-        if int(message.text) == 6:
+        if message.text.lower() == "sair":
             # enviar lista para função interna
             return None
-        if int(message.text) == 5:
+        if message.text.lower() == "prox":
             self.usersSymptons[userId][0] += 5
             if numberOfSymptoms == 0:
                 return self.generateMenu(self.usersSymptons[userId][0])
