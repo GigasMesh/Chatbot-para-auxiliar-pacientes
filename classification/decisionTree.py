@@ -1,14 +1,15 @@
 from sklearn import tree
 from dataset_services import PandasDataset
+import numpy as np
 
 class DecisionTree:
     def __init__(self):
-        pandasDataset = PandasDataset('../dataset_services/datasets/modifiedDataset.csv')
+        self.pandasDataset = PandasDataset('../dataset_services/datasets/modifiedDataset.csv')
 
-        columns = pandasDataset.dataset.columns
+        columns = self.pandasDataset.dataset.columns
         columns = columns[1:]
-        x = pandasDataset.dataset[columns]
-        y = pandasDataset.dataset['doenca']
+        x = self.pandasDataset.dataset[columns]
+        y = self.pandasDataset.dataset['doenca']
 
         self.clf = tree.DecisionTreeClassifier()
         self.clf = self.clf.fit(x, y)
@@ -16,3 +17,16 @@ class DecisionTree:
     def classify(self, symptoms):
         return(self.clf.predict([symptoms]))
 
+    def returnDisease(self, symtomps):
+        symtomps.pop(0)
+        columns = list(self.pandasDataset.dataset.columns)
+        columns.pop(0)
+        classifier = np.zeros(len(columns))
+
+        for symptom in symtomps:
+            for value in range(len(columns)):
+                if symptom == columns[value]:
+                    classifier[value] = 1
+
+        print(classifier)
+        return self.classify(classifier)
