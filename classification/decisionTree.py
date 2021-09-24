@@ -28,4 +28,7 @@ class DecisionTree:
                 if symptom == columns[value]:
                     classifier[value] = 1
 
-        return self.classify(classifier)
+        if not symtomps:
+            return ['Nenhuma']
+        else:
+            return self.classify(classifier)
