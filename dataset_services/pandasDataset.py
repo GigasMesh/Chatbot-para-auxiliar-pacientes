@@ -57,7 +57,6 @@ class PandasDataset:
         return symptons[id[::-1]]
 
     def getCorrelatedSymptoms(self, symptom, list):
-        print(list)
         symptoms = []
         for row in range(len(self.dataset)):
             if self.dataset[symptom][row] == 1:
