@@ -9,24 +9,13 @@ bot = telebot.TeleBot(token=botObject.token)
 def message_received(message):
     # Questionary
     userId = message.from_user.id
-    if userId not in botObject.usersInformations:
-        botObject.usersInformations[userId] = []
-        bot.send_message(chat_id=message.from_user.id, text=botObject.questionary[0])
-        return None
-    userInformations = botObject.usersInformations[userId]
-    if len(userInformations) < len(botObject.questionary) - 1:
-        userInformations.append(message.text)
-        bot.send_message(chat_id=message.from_user.id, text=botObject.questionary[len(userInformations)])
-        return None
-    elif len(userInformations) < 4:
-        userInformations.append(message.text)
+    if userId not in botObject.usersSymptons:
+        bot.send_message(chat_id=message.from_user.id, text=botObject.returnQuestion(userId, message))
+        print(botObject.usersInformations)
 
     # Symptons
-    userSymptons = botObject.usersSymptons
-    if userId not in userSymptons:
-        userSymptons[userId] = [0]
-        bot.send_message(chat_id=message.from_user.id, text=botObject.generateMenu(userSymptons[userId][0]))
     else:
+        userSymptons = botObject.usersSymptons
         if int(message.text) == 5:
             userSymptons[userId][0] = userSymptons[userId][0] + 5
             if len(userSymptons[userId]) == 1:

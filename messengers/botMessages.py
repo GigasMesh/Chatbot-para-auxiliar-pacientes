@@ -22,3 +22,16 @@ class BotMessages:
             menu = menu + "%d - %s\n" % (numero - index, rank[numero])
         menu = menu + "5 - Nenhum dos sintomas acima"
         return menu
+
+    def returnQuestion(self, userId, message):
+        if userId not in self.usersInformations:
+            self.usersInformations[userId] = [0]
+            return self.questionary[0]
+        elif self.usersInformations[userId][0] != "Done":
+            self.usersInformations[userId].append(message.text)
+            self.usersInformations[userId][0] += 1
+            if self.usersInformations[userId][0] == 4:
+                self.usersInformations[userId][0] = "Done"
+                self.usersSymptons[userId] = [0]
+                return self.generateMenu(0)
+            return self.questionary[self.usersInformations[userId][0]]
