@@ -1,4 +1,4 @@
-from messengers import BotMessages
+from messages import BotMessages
 import telebot
 from classification import DecisionTree
 
