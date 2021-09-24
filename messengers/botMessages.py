@@ -17,11 +17,14 @@ class BotMessages:
     def generateMenu(self, index, rank=None):
         if not rank:
             rank = self.rank
+        if index > len(rank) - 5:
+            return None
         print("tamanho do rank: ", len(rank))
         menu = "Digite o número do primeiro sintoma que você está sentindo:\n"
         for numero in range(index, index+5):
             menu = menu + "%d - %s\n" % (numero - index, rank[numero])
-        menu = menu + "5 - Nenhum dos sintomas acima"
+        menu = menu + "5 - Nenhum dos sintomas acima\n"
+        menu = menu + "6 - Não tenho mais sintomas para listar"
         return menu
 
     def returnQuestion(self, userId, message):
@@ -39,7 +42,11 @@ class BotMessages:
 
     def returnMenu(self, userId, message):
         numberOfSymptoms = len(self.usersSymptons[userId]) - 1
+        if int(message.text) == 6:
+            # enviar lista para função interna
+            return None
         if int(message.text) == 5:
+            print(self.usersSymptons[userId][0])
             self.usersSymptons[userId][0] += 5
             if numberOfSymptoms == 0:
                 return self.generateMenu(self.usersSymptons[userId][0])
@@ -58,3 +65,6 @@ class BotMessages:
         rank = self.pandasDataset.getCorrelatedSymptoms(symptom, symptoms)
         return self.generateMenu(self.usersSymptons[userId][0], rank)
 
+    def resetUserInformations(self, userId):
+        self.usersInformations.pop(userId, None)
+        self.usersSymptons.pop(userId, None)

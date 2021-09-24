@@ -15,9 +15,12 @@ def message_received(message):
 
     # Symptons
     else:
-        userSymptons = botObject.usersSymptons
-        bot.send_message(chat_id=message.from_user.id, text=botObject.returnMenu(userId, message))
-
+        result = botObject.returnMenu(userId, message)
+        if result:
+            bot.send_message(chat_id=message.from_user.id, text=result)
+        else:
+            bot.send_message(chat_id=message.from_user.id, text="Não há mais sintomas para serem mostrados")
+            botObject.resetUserInformations(userId)
     # print(botObject.usersInformations)
     print(botObject.usersSymptons)
 
