@@ -1,9 +1,10 @@
+from messages.inputValidation import inputTypeVerification
 from dataset_services import PandasDataset
 
 
 class BotMessages:
     def __init__(self):
-        self.token = open('messengers/tokenTelegram.txt').read()
+        self.token = open('messages/tokenTelegram.txt').read()
         self.pandasDataset = PandasDataset('dataset_services/datasets/modifiedDataset.csv')
         self.rank = self.pandasDataset.getRanking()
         self.usersInformations = {}
@@ -35,8 +36,9 @@ class BotMessages:
             self.usersInformations[userId] = [0]
             return self.questionary[0]
         elif self.usersInformations[userId][0] != "Done":
-            self.usersInformations[userId].append(message.text)
-            self.usersInformations[userId][0] += 1
+            if inputTypeVerification(message.text, self.usersInformations[userId][0]):
+                self.usersInformations[userId].append(message.text)
+                self.usersInformations[userId][0] += 1
             if self.usersInformations[userId][0] == 4:
                 self.usersInformations[userId][0] = "Done"
                 self.usersSymptons[userId] = [0]
