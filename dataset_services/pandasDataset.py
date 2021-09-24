@@ -59,7 +59,13 @@ class PandasDataset:
     def getCorrelatedSymptoms(self, symptom, list):
         symptoms = []
         for row in range(len(self.dataset)):
-            if self.dataset[symptom][row] == 1:
+            correlated = True
+            for index in list:
+                if self.dataset[index][row] != 1:
+                    correlated = False
+            if self.dataset[symptom][row] != 1:
+                correlated = False
+            if correlated:
                 for column in self.dataset.columns:
                     if column != symptom:
                         if self.dataset[column][row] == 1 and column not in symptoms and column not in list:

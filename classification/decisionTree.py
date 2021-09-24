@@ -3,8 +3,8 @@ from dataset_services import PandasDataset
 import numpy as np
 
 class DecisionTree:
-    def __init__(self):
-        self.pandasDataset = PandasDataset('../dataset_services/datasets/modifiedDataset.csv')
+    def __init__(self, path):
+        self.pandasDataset = PandasDataset(path)
 
         columns = self.pandasDataset.dataset.columns
         columns = columns[1:]
@@ -28,5 +28,4 @@ class DecisionTree:
                 if symptom == columns[value]:
                     classifier[value] = 1
 
-        print(classifier)
         return self.classify(classifier)

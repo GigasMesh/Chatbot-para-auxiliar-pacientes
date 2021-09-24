@@ -46,7 +46,6 @@ class BotMessages:
             # enviar lista para função interna
             return None
         if int(message.text) == 5:
-            print(self.usersSymptons[userId][0])
             self.usersSymptons[userId][0] += 5
             if numberOfSymptoms == 0:
                 return self.generateMenu(self.usersSymptons[userId][0])
