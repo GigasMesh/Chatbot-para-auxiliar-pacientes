@@ -26,7 +26,7 @@ def message_received(message):
             disease = decisionTree.returnDisease(symptons)[0]
             print("Doença do usuário %s: " % message.from_user.username, disease)
             bot.send_message(chat_id=message.from_user.id, text="Não há mais sintomas para serem mostrados")
-            bot.send_message(chat_id=message.from_user.id, text="Parabéns! Sua doença é: %s" % disease)
+            bot.send_message(chat_id=message.from_user.id, text="Sua doença pode ser: %s" % disease)
             print("Sintomas do usuário %s: " % message.from_user.username, botObject.usersSymptons[userId])
             botObject.resetUserInformations(userId)
 
