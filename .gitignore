@@ -5,6 +5,7 @@ __pycache__/
 *.idea
 messages/tokenTelegram.txt
 funcionalidades/funcionalidade_filmes/api_key.txt
+services/apiKeyGoogle.txt
 
 # C extensions
 *.so
