@@ -99,6 +99,6 @@ class BotMessages:
                 "Disease": disease}
         datasetObject.insere_dados("usersInformations", "Personal", data, "ID")
         for symptom in symptoms:
-            id = symptoms.index(symptom)
-            datasetObject.insere_dados("UsersSymptoms", "Relation", {"ID": id, "User ID": userId, "symptom": symptom},
+            size = datasetObject.retornar_numero_de_linhas("UsersSymptoms", "Relation")
+            datasetObject.insere_dados("UsersSymptoms", "Relation", {"ID": size, "User ID": userId, "symptom": symptom},
                                        "ID")
