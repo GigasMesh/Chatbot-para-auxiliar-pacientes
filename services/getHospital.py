@@ -8,9 +8,7 @@ def GetNearHospital(cep):
     endereco = pycep_correios.get_address_from_cep(cep)
     print(endereco)
     geolocator = Nominatim(user_agent="teste123")
-    result = endereco['logradouro'] + " " + endereco['bairro'] + " " + endereco['cidade']
-    location = geolocator.geocode(result)
-    print(result)
+    location = geolocator.geocode(endereco['logradouro'] + ", " + endereco['cidade'] + " - " + endereco['bairro'])
     if not location:
         return None
 
@@ -22,6 +20,7 @@ def GetNearHospital(cep):
         lat_lng={'lat': location.latitude, 'lng': location.longitude},
         radius=5000,
         types=[types.TYPE_HOSPITAL])
+
 
     if query_result.has_attributions:
         print(query_result.html_attributions)
