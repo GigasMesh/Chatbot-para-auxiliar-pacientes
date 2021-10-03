@@ -26,7 +26,7 @@ def message_received(message):
             symptons = botObject.usersSymptons[userId]
             disease = decisionTree.returnDisease(symptons)[0]
             print("Doença do usuário %s: " % message.from_user.first_name, disease)
-            print("Sintomas do usuário %s: " % message.from_user.first_name, botObject.usersSymptons[userId])
+            print("Sintomas do usuário %s: " % message.from_user.first_name, symptons)
             bot.send_message(chat_id=message.from_user.id, text="Não há mais sintomas para serem mostrados")
             hospital = GetNearHospital(botObject.usersInformations[userId][4])
             if hospital:
@@ -34,6 +34,7 @@ def message_received(message):
             else:
                 bot.send_message(chat_id=message.from_user.id, text="Não encontramos seu endereço")
             # bot.send_message(chat_id=message.from_user.id, text="Sua doença pode ser: %s" % disease)
+            botObject.saveInformations(userId, symptons, disease)
             botObject.resetUserInformations(userId)
 
 

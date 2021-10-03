@@ -1,5 +1,6 @@
 from messages.inputValidation import inputTypeVerification
 from dataset_services import PandasDataset
+from dataset_services import DatasetObject
 
 
 class BotMessages:
@@ -53,7 +54,13 @@ class BotMessages:
             return None
         if message.text.lower() == "voltar":
             if self.usersSymptons[userId][0] < 5:
-                return self.generateMenu(0)
+                if numberOfSymptoms == 0:
+                    return self.generateMenu(0)
+                else:
+                    symptom = self.usersSymptons[userId][-1]
+                    symptoms = self.usersSymptons[userId][1:]
+                    rank = self.pandasDataset.getCorrelatedSymptoms(symptom, symptoms)
+                    return self.generateMenu(self.usersSymptons[userId][0], rank)
             else:
                 self.usersSymptons[userId][0] -= 5
                 if numberOfSymptoms == 0:
@@ -84,3 +91,14 @@ class BotMessages:
     def resetUserInformations(self, userId):
         self.usersInformations.pop(userId, None)
         self.usersSymptons.pop(userId, None)
+
+    def saveInformations(self, userId, symptoms, disease):
+        datasetObject = DatasetObject("dataset_services/datasets")
+        info = self.usersInformations[userId]
+        data = {"ID": userId, "Name": info[1], "Birthdate": info[2], "Gender": info[3], "CEP": info[4],
+                "Disease": disease}
+        datasetObject.insere_dados("usersInformations", "Personal", data, "ID")
+        for symptom in symptoms:
+            id = symptoms.index(symptom)
+            datasetObject.insere_dados("UsersSymptoms", "Relation", {"ID": id, "User ID": userId, "symptom": symptom},
+                                       "ID")

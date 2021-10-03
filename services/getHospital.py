@@ -25,7 +25,6 @@ def GetNearHospital(cep):
 
     if query_result.has_attributions:
         print(query_result.html_attributions)
-    print(query_result.places)
     for place in query_result.places:
         if 'UBS' in place.name or 'Hospital' in place.name or 'Unidade de Saúde' in place.name or 'Unidade de Saude' in place.name:
             return place
