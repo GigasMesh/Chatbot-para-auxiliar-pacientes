@@ -4,12 +4,15 @@ from googleplaces import GooglePlaces, types, lang
 import requests
 import json
 
-def getNearHospital(cep):
+def GetNearHospital(cep):
     endereco = pycep_correios.get_address_from_cep(cep)
-
+    print(endereco)
     geolocator = Nominatim(user_agent="teste123")
-    location = geolocator.geocode(endereco['logradouro'] + ", " + endereco['cidade'] + " - " + endereco['bairro'])
-
+    result = endereco['logradouro'] + " " + endereco['bairro'] + " " + endereco['cidade']
+    location = geolocator.geocode(result)
+    print(result)
+    if not location:
+        return None
 
     API_KEY = open('services/apiKeyGoogle.txt').read()
 
@@ -22,11 +25,9 @@ def getNearHospital(cep):
 
     if query_result.has_attributions:
         print(query_result.html_attributions)
-
+    print(query_result.places)
     for place in query_result.places:
         if 'UBS' in place.name or 'Hospital' in place.name or 'Unidade de Saúde' in place.name or 'Unidade de Saude' in place.name:
             return place
 
     return None
-
-print(getNearHospital('66110350').name)
