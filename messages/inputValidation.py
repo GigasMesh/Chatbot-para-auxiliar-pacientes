@@ -53,7 +53,13 @@ def cepValidation(message):
     return True
 
 def intervalValidation(message, limit1, limit2):
-    symptomOption = int(message)
-    if symptomOption >= limit1 and symptomOption <= limit2:
-        return True
+    options = ["Prox", "Sair", "Voltar"]
+    symptomOption = message
+    if symptomOption.isalpha():
+        if symptomOption.capitalize() in options:
+            return True
+    elif symptomOption.isnumeric():
+        symptomOption = int(symptomOption) 
+        if symptomOption >= limit1 and symptomOption <= limit2:
+            return True
     return False

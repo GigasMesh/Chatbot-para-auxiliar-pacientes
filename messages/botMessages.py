@@ -49,6 +49,22 @@ class BotMessages:
 
     def returnMenu(self, userId, message):
         numberOfSymptoms = len(self.usersSymptons[userId]) - 1
+        if not inputTypeVerification(message.text, 'symptoms'):
+            if self.usersSymptons[userId][0] < 5:
+                if numberOfSymptoms == 0:
+                    return self.generateMenu(0)
+                else:
+                    symptom = self.usersSymptons[userId][-1]
+                    symptoms = self.usersSymptons[userId][1:]
+                    rank = self.pandasDataset.getCorrelatedSymptoms(symptom, symptoms)
+                    return self.generateMenu(self.usersSymptons[userId][0], rank)
+            else:
+                if numberOfSymptoms == 0:
+                    return self.generateMenu(self.usersSymptons[userId][0])
+                symptom = self.usersSymptons[userId][-1]
+                symptoms = self.usersSymptons[userId][1:]
+                rank = self.pandasDataset.getCorrelatedSymptoms(symptom, symptoms)
+                return self.generateMenu(self.usersSymptons[userId][0], rank)
         if message.text.lower() == "sair":
             # enviar lista para função interna
             return None
